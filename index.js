@@ -8,7 +8,7 @@ const pvObject = new PVObject("XLAddons", {
   chWaypoints: false,
   chpowcfg: {
     x: 955,
-    y: 290,
+    y: 300,
   },
 });
 
@@ -135,8 +135,8 @@ function zealotOverlay() {
 
   if (
     Scoreboard.getLinesByScore(6)[0] != undefined &&
-    Scoreboard.getLinesByScore(6)[0].getName().includes("Dragon's") &&
-    Scoreboard.getLinesByScore(9)[0].getName().includes("Dragon's")
+    !Scoreboard.getLinesByScore(6)[0].getName().includes("Dragon's") &&
+    !Scoreboard.getLinesByScore(9)[0].getName().includes("Dragon's")
   )
     return;
 
@@ -185,25 +185,15 @@ function renderCube(x, y, z, r, g, b, a) {
 // Notify user to start a session
 
 register("chat", () => {
-  // Exit if not in Precursor Remnants
-
-  if (
-    Scoreboard.getLinesByScore(9)[0].getName() !=
-      " §7⏣ §bPrecursor🍭§b Remnants" &&
-    Scoreboard.getLinesByScore(7)[0].getName() !=
-      " §7⏣ §bPrecursor🍭§b Remnants"
-  )
-    return;
-
   // Exit out if in a session
 
   if (chpwdersession.started == true) return;
 
   ChatLib.chat(
     new Message(
-      new TextComponent(
-        "§7Click here to start a powder mining session."
-      ).setClick("run_command", "/xla start_powder")
+      new TextComponent("§7Click here to start a powder mining session.")
+        .setClick("run_command", "/xla start_powder")
+        .setHoverValue("/xla start_powder")
     )
   );
 }).setChatCriteria("&r&aYou uncovered a treasure chest!&r");
