@@ -12,6 +12,15 @@ const pvObject = new PVObject("XLAddons", {
   },
 });
 
+// Add commas to number
+// Thanks https://www.delftstack.com/howto/javascript/javascript-add-commas-to-number/
+
+function commanum(numb) {
+  var str = numb.toString().split(".");
+  str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return str.join(".");
+}
+
 let lastZealotSpawn = Date.now();
 let chpwdersession = { started: false };
 
@@ -234,11 +243,13 @@ function renderPowder() {
   // Render info onto screen
 
   let text = new Text(
-    `§fUptime: ${hours} hours, ${minutes} minutes, and ${seconds} seconds.\n\n§dGemstone: §d${
+    `§fUptime: ${hours} hours, ${minutes} minutes, and ${seconds} seconds.\n\n§dGemstone: §d${commanum(
       chpwdersession.gp
-    }\n§dGemstone Per Hour: §d${Math.trunc(gph)}\n\n§bMithril: §b${
+    )}\n§dGemstone Per Hour: §d${commanum(
+      Math.trunc(gph)
+    )}\n\n§bMithril: §b${commanum(
       chpwdersession.mp
-    }\n§bMithril Per Hour: §b${Math.trunc(mph)}`,
+    )}\n§bMithril Per Hour: §b${commanum(Math.trunc(mph))}`,
     pvObject.chpowcfg.x,
     pvObject.chpowcfg.y
   )
