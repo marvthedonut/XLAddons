@@ -1,5 +1,6 @@
 import PVObject from "PersistentData";
 import renderBeaconBeam from "../BeaconBeam";
+import RenderLib from "../RenderLib/index.js";
 
 // Persistent Data
 
@@ -160,9 +161,12 @@ register("renderWorld", chWaypoints);
 
 function renderCube(x, y, z, r, g, b, a) {
   // Code to render a cube
+  Tessellator.begin(GL11.GL_QUADS, false);
 
-  Tessellator.begin(7, false);
-  Tessellator.colorize(r, g, b, a)
+  // Detect distance to player
+  let am = new Entity(Player.getPlayer()).distanceTo(x, y, z) / 20;
+
+  Tessellator.colorize(r, g, b, a * am)
     .translate(x, y, z)
     .pos(0.5, 0, 0.5)
     .pos(0.5, 0, -0.5)
@@ -187,8 +191,11 @@ function renderCube(x, y, z, r, g, b, a) {
     .pos(-0.5, 1, 0.5)
     .pos(0.5, 1, 0.5)
     .pos(0.5, 0, 0.5)
-    .pos(-0.5, 0, 0.5)
-    .draw();
+    .pos(-0.5, 0, 0.5);
+
+  GlStateManager.func_179097_i(); // Depth disabled
+  Tessellator.draw(); // Draw
+  RenderLib.drawEspBox(x, y, z, 1, 1, 0, 1, 1, 0.5 * am, true); // Draw esp outline
 }
 
 // Notify user to start a session
@@ -274,28 +281,55 @@ function chWaypoints() {
     true,
     0.75
   );
-  renderBeaconBeam(513, 107, 513, 0, 255, 255, 1, true);
-  renderCube(513.5, 106, 513.5, 0, 1, 1, 0.5);
+  renderBeaconBeam(
+    513,
+    107,
+    513,
+    0,
+    255,
+    255,
+    1 * (new Entity(Player.getPlayer()).distanceTo(513.5, 107, 513.5) / 20),
+    false
+  );
+  renderCube(513.5, 106, 513.5, 0, 1, 1, 0.4);
 
   // Jungle
 
   Tessellator.drawString("Jungle", 461.5, 118, 461.5, 0x00ffff, true, 0.75);
-  renderBeaconBeam(461, 119, 461, 0, 255, 255, 1, true);
-  renderCube(461.5, 118, 461.5, 0, 1, 1, 0.5);
+  renderBeaconBeam(
+    461,
+    119,
+    461,
+    0,
+    255,
+    255,
+    1 * (new Entity(Player.getPlayer()).distanceTo(461.5, 118, 461.5) / 20),
+    false
+  );
+  renderCube(461.5, 118, 461.5, 0, 1, 1, 0.4);
 
   // Precursor Remnants
 
   Tessellator.drawString(
     "Precursor Remnants",
-    567.5,
+    566.5,
     118,
-    565.5,
+    564.5,
     0x00ffff,
     true,
     0.75
   );
-  renderBeaconBeam(566, 120, 564, 0, 255, 255, 1, true);
-  renderCube(566.5, 119, 564.5, 0, 1, 1, 0.5);
+  renderBeaconBeam(
+    566,
+    120,
+    564,
+    0,
+    255,
+    255,
+    1 * (new Entity(Player.getPlayer()).distanceTo(567.5, 118, 565.5) / 20),
+    false
+  );
+  renderCube(566.5, 119, 564.5, 0, 1, 1, 0.4);
 
   // Goblin Holdout
 
@@ -308,8 +342,17 @@ function chWaypoints() {
     true,
     0.75
   );
-  renderBeaconBeam(462, 120, 564, 0, 255, 255, 1, true);
-  renderCube(462.5, 119, 564.5, 0, 1, 1, 0.5);
+  renderBeaconBeam(
+    462,
+    120,
+    564,
+    0,
+    255,
+    255,
+    1 * (new Entity(Player.getPlayer()).distanceTo(462.5, 119, 564.5) / 20),
+    false
+  );
+  renderCube(462.5, 119, 564.5, 0, 1, 1, 0.4);
 
   // Mithril Deposits
 
@@ -322,6 +365,15 @@ function chWaypoints() {
     true,
     0.75
   );
-  renderBeaconBeam(565, 119, 462, 0, 255, 255, 1, true);
-  renderCube(565.5, 118, 462.5, 0, 1, 1, 0.5);
+  renderBeaconBeam(
+    565,
+    119,
+    462,
+    0,
+    255,
+    255,
+    1 * (new Entity(Player.getPlayer()).distanceTo(565.5, 118, 462.5) / 20),
+    false
+  );
+  renderCube(565.5, 118, 462.5, 0, 1, 1, 0.4);
 }
