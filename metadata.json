@@ -1,10 +1,7 @@
 {
-  "name": "XLAddons",
-  "creator": "XLFrie",
-  "version": "1.0.0",
-  "entry": "index.js",
-  "requires": [
-    "PersistentData",
-    "BeaconBeam"
-  ]
+	"name": "XLAddons",
+	"creator": "XLFrie",
+	"version": "1.0.0",
+	"entry": "index.js",
+	"requires": ["PersistentData", "BeaconBeam", "Vigilance"]
 }
